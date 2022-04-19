@@ -24,7 +24,7 @@ export default {
   plugins: [],
 
   router: {
-    middleware: 'auth',
+
   },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -39,6 +39,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -72,4 +73,18 @@ export default {
       'vee-validate'
     ]
   },
+
+  auth: {
+    strategies: {
+      local: {
+        user: {
+          autoFetch: false
+        },
+        endpoints: {
+          login: { url: 'http://localhost:3000/auth/login', method: 'post', propertyName: 'token'},
+          user: false
+        },
+      }
+    }
+  }
 }

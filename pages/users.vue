@@ -16,6 +16,7 @@
 
 <script>
 export default {
+  middleware: 'auth',
   data() {
     return {
       users: [],
@@ -46,11 +47,7 @@ export default {
   },
   mounted() {
     this.$axios
-      .get('http://localhost:3000/users', {
-        headers: {
-          Authorization: 'Bearer ' + this.$store.state.token
-        }
-      })
+      .get('http://localhost:3000/users')
       .then((response) => {
         this.users = response.data
         this.loading = false

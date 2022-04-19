@@ -25,7 +25,6 @@
           placeholder="Password"
           label="Password"
           name="password"
-
         />
       </validation-provider>
       <v-btn type="submit"> Enviar </v-btn>
@@ -57,16 +56,21 @@ export default {
     }
   },
   methods: {
-    submit: function(e){
-      const {email, password} = e.target
-      this.$axios.post('http://localhost:3000/auth/login',{email: email.value, password: password.value})
-      .then((response) => {
-        localStorage.setItem('token', response.data.access_token)
-        this.$store.commit('login', response.data.access_token);
-        this.$router.push('/users')
-      })
-    }
-  }
+    submit: async function (e) {
+      const { email, password } = e.target
+      this.$auth
+        .loginWith('local', {
+          data: {
+            email: email.value,
+            password: password.value,
+          },
+        })
+        .then((response) => {
+          this.$auth.setUser(response.data.user);
+          this.$router.push('/')
+        })
+    },
+  },
 }
 </script>
 <style scoped>
