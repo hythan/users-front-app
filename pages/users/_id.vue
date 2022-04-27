@@ -26,6 +26,16 @@
           placeholder="example@example.com"
         />
       </validation-provider>
+
+      <validation-provider name="Role" rules="required" v-slot="{ errors }">
+        <v-text-field
+          v-model="input_role"
+          type="text"
+          :error-messages="errors"
+          label="Role"
+          name="role"
+        />
+      </validation-provider>
       <validation-provider name="Password" rules="required" v-slot="{ errors }">
         <v-text-field
           v-model="input_password"
@@ -50,7 +60,8 @@
           name="password_confirmation"
         />
       </validation-provider>
-      <v-btn type="submit"> Enviar </v-btn>
+      <v-checkbox v-model="input_active" label="Active"></v-checkbox>
+      <v-btn type="submit"> Atualizar </v-btn>
     </form>
   </div>
 </template>
@@ -58,8 +69,6 @@
 <script>
 import { email, required } from 'vee-validate/dist/rules'
 import { extend, ValidationProvider, setInteractionMode } from 'vee-validate'
-import Swal from 'sweetalert2'
-
 setInteractionMode('eager')
 extend('email', {
   ...email,
@@ -87,33 +96,38 @@ export default {
       input_password: '',
       input_name: '',
       input_password_confirmation: '',
+      input_role: '',
+      input_active: false,
     }
   },
   methods: {
-    submit: function (e) {
-      const { full_name, email, password, password_confirmation } = e.target
-      if (password.value !== password_confirmation.value) {
-        console.log('dawpok')
+    submit: function () {
+      if (
+        this.input_password &&
+        this.input_password !== this.input_password_confirmation
+      ) {
         return
       }
 
       this.$axios
-        .post('/users', {
-          name: full_name.value,
-          email: email.value,
-          password: password.value,
+        .patch('/users/' + this.$route.params.id, {
+          name: this.input_name,
+          email: this.input_email,
+          role: this.input_role,
+          active: this.input_active,
         })
         .then(() => {
           this.$router.push('/users')
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'The new user has successfully created.',
-            showConfirmButton: false,
-            timer: 1500,
-          })
         })
     },
+  },
+  mounted() {
+    this.$axios.get('/users/' + this.$route.params.id).then((response) => {
+      this.input_name = response.data.name
+      this.input_email = response.data.email
+      this.input_role = response.data.role
+      this.input_active = response.data.active
+    })
   },
 }
 </script>

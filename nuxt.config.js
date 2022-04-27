@@ -41,6 +41,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    'nuxt-sweetalert2',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
