@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NuxtLink to="/users/create">Create user</NuxtLink>
     <v-data-table
       :headers="headers"
       :items="users"
@@ -16,7 +17,6 @@
 
 <script>
 export default {
-  middleware: 'auth',
   data() {
     return {
       users: [],
@@ -47,14 +47,12 @@ export default {
   },
   mounted() {
     this.$axios
-      .get('http://localhost:3000/users')
+      .get('users')
       .then((response) => {
         this.users = response.data
         this.loading = false
       })
-      .catch((error) => {
-        this.$router.push('/login');
-      })
+      .catch((error) => {})
   },
 }
 </script>

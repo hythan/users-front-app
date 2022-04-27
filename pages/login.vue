@@ -15,6 +15,7 @@
           :error-messages="errors"
           name="email"
           placeholder="example@example.com"
+          required
         />
       </validation-provider>
       <validation-provider name="Password" rules="required" v-slot="{ errors }">
@@ -25,6 +26,7 @@
           placeholder="Password"
           label="Password"
           name="password"
+          required
         />
       </validation-provider>
       <v-btn type="submit"> Enviar </v-btn>
@@ -43,6 +45,7 @@ extend('email', {
 extend('required', {
   ...required,
   message: '{_field_} cannot be empty.',
+  computesRequired: true
 })
 export default {
   layout: 'login',
@@ -64,10 +67,6 @@ export default {
             email: email.value,
             password: password.value,
           },
-        })
-        .then((response) => {
-          this.$auth.setUser(response.data.user);
-          this.$router.push('/')
         })
     },
   },
