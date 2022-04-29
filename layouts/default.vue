@@ -31,9 +31,13 @@
       <v-spacer />
 
       <div v-if="$auth.loggedIn">
-        {{$auth.user.email}}
+        {{ $auth.user.email }}
       </div>
-      <div v-else>Deslogado</div>
+      <div v-else>
+        <nuxt-link to="/login" class="btn-login">
+          <v-btn color="success">Entrar</v-btn>
+        </nuxt-link>
+      </div>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -62,11 +66,6 @@ export default {
           to: '/',
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-        {
           icon: 'mdi-account-group',
           title: 'Users',
           to: '/users',
@@ -80,3 +79,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.btn-login {
+  text-decoration: none;
+}
+</style>

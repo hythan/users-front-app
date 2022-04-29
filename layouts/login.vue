@@ -1,16 +1,16 @@
 <template>
-    <v-app>
-      <h1>1diopjawiodjawiodj</h1>
-      <Nuxt/>
-    </v-app>
+  <v-app>
+    <v-main>
+      <v-container>
+        <Nuxt />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style>
-
 </style>

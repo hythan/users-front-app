@@ -90,6 +90,7 @@ export default {
   components: {
     ValidationProvider,
   },
+  middleware: 'auth',
   data() {
     return {
       input_email: '',

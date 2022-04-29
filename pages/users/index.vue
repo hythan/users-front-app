@@ -15,7 +15,7 @@
           <v-toolbar-title>Users</v-toolbar-title
           ><v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <nuxt-link to="/users/create" class="teste">
+          <nuxt-link to="/users/create" class="btn-create">
             <v-btn color="primary" class="mb-2"> Create user</v-btn>
           </nuxt-link>
         </v-toolbar>
@@ -32,6 +32,7 @@
 import Swal from 'sweetalert2'
 
 export default {
+  middleware: 'auth',
   data() {
     return {
       errorMessage: '',
@@ -101,7 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.teste {
+.btn-create {
   text-decoration: none;
 }
 </style>

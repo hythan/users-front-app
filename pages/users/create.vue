@@ -81,6 +81,7 @@ export default {
   components: {
     ValidationProvider,
   },
+  middleware: 'auth',
   data() {
     return {
       input_email: '',
@@ -93,7 +94,6 @@ export default {
     submit: function (e) {
       const { full_name, email, password, password_confirmation } = e.target
       if (password.value !== password_confirmation.value) {
-        console.log('dawpok')
         return
       }
 
@@ -103,11 +103,21 @@ export default {
           email: email.value,
           password: password.value,
         })
-        .then(() => {
+        .then((response) => {
+          if (response.data.error) {
+            Swal.fire({
+              position: 'center',
+              type: 'error',
+              title: 'Something went wrong.',
+              showConfirmButton: false,
+              timer: 2000,
+            })
+            return;
+          }
           this.$router.push('/users')
           Swal.fire({
             position: 'top-end',
-            icon: 'success',
+            type: 'success',
             title: 'The new user has successfully created.',
             showConfirmButton: false,
             timer: 1500,
